@@ -1,0 +1,28 @@
+:root {
+  --color-brand--1: #ffb545;
+  --color-brand--2: #00c46a;
+
+  --color-dark--0: #242a2e;
+  --color-dark--1: #2d3439;
+  --color-dark--2: #42484d;
+  --color-light--1: #aaa;
+  --color-light--2: #ececec;
+  --color-light--3: #d6dee0;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  color: var(--color-light--2);
+}
+.cta:link,
+.cta:visited {
+  background-color: var(--color-brand--2);
+  color: var(--color-ligh--1);
+  padding: 0.8rem 2rem;
+  border-radius: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+}
