@@ -1,38 +1,55 @@
-function ChatContent({ chats, userData, handleMessage, sendValue }) {
+import MessageSender from "./MessageSender";
+import ChatMessages from "./ChatMessages";
+import styles from "./ChatContent.module.css";
+import {
+  findAndDisplayConversations,
+  findChatMessages,
+  setHandleReceivedMessageCallback,
+} from "../api/websocket";
+import { useEffect, useState } from "react";
+
+function ChatContent({ nickName, selectedUser, users, setUsers }) {
+  const [messages, setMessages] = useState([]);
+
+  async function handleMessages() {
+    const data = await findChatMessages(nickName, selectedUser);
+    setMessages(data);
+  }
+
+  useEffect(() => {
+    handleMessages();
+  }, [nickName, selectedUser]);
+
+  useEffect(() => {
+    setHandleReceivedMessageCallback((message) => {
+      if (
+        (message.senderId === nickName &&
+          message.recipientId === selectedUser) ||
+        (message.senderId === selectedUser && message.recipientId === nickName)
+      ) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      }
+      if (
+        message.senderId &&
+        !users.some((user) => user.nickName === message.senderId)
+      ) {
+        setUsers((prevUsers) => [...prevUsers, { nickName: message.senderId }]);
+      }
+    });
+  }, [nickName, selectedUser]);
+
   return (
-    <div className="chat-content">
-      <ul className="chat-messages">
-        {chats.map(function (chat, index) {
-          return (
-            <li
-              className={`message ${
-                chat.senderName === userData.username && "self"
-              }`}
-              key={index}
-            >
-              {chat.senderName !== userData.username && (
-                <div className="avatar">{chat.senderName}</div>
-              )}
-              <div className="message-data">{chat.message}</div>
-              {chat.senderName === userData.username && (
-                <div className="avatar self">{chat.senderName}</div>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-      <div className="send-message">
-        <input
-          type="text"
-          className="input-message"
-          placeholder="enter the message"
-          value={userData.message}
-          onChange={handleMessage}
-        />
-        <button type="button" className="send-button" onClick={sendValue}>
-          send
-        </button>
-      </div>
+    <div className={styles["chat-content"]}>
+      <ChatMessages
+        nickName={nickName}
+        selectedUser={selectedUser}
+        messages={messages}
+      />
+      <MessageSender
+        nickName={nickName}
+        selectedUser={selectedUser}
+        setMessages={setMessages}
+      />
     </div>
   );
 }

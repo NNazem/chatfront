@@ -1,0 +1,14 @@
+.send-message {
+  padding: 10px;
+  margin-bottom: 14px;
+  border: 1px solid #fff;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.send-message > :first-child {
+  flex: 1;
+}

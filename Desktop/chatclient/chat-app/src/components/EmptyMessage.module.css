@@ -1,0 +1,14 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  justify-self: center;
+  background-color: #2ea44f;
+  border-radius: 15px;
+  padding: 1rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.5rem;
+  color: #fff;
+  font-weight: 600;
+}

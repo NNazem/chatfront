@@ -1,0 +1,15 @@
+.chat-table {
+  padding: 2px;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.chat-table > :first-child {
+  flex: 0 0 auto;
+  min-width: 150px;
+}
+
+.chat-table > :nth-child(2) {
+  flex: 1;
+}

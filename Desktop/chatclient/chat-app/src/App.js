@@ -1,10 +1,10 @@
 import { useState } from "react";
-import ChatRoom from "./components/ChatRoom";
+import Chat from "./components/Chat";
 
 function App() {
   return (
     <div>
-      <ChatRoom />
+      <Chat />
     </div>
   );
 }
