@@ -5,7 +5,7 @@ import ChatNav from "./ChatNav";
 import styles from "./ChatTable.module.css";
 import { setHandleReceivedMessageCallback } from "../api/websocket";
 
-function ChatTable({ nickName, onLogout }) {
+function ChatTable({ nickName, handleLogout }) {
   const [selectedUser, setSelectedUser] = useState();
   const [users, setUsers] = useState([]);
 
@@ -16,7 +16,7 @@ function ChatTable({ nickName, onLogout }) {
   return (
     <div className={styles["chat-table"]}>
       <ChatNav
-        onLogout={onLogout}
+        onLogout={handleLogout}
         nickName={nickName}
         onClick={handleSelectedUser}
         users={users}

@@ -3,15 +3,89 @@ import SockJS from "sockjs-client";
 
 let stompClient = null;
 
+const BASE_URL = "http://localhost:8080";
+
+async function apiRequest(
+  endpoint,
+  method = "GET",
+  body = null,
+  requireAuth = true
+) {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (requireAuth) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      headers["Authorization"] = "Bearer " + token;
+    }
+  }
+
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : null,
+  });
+
+  const contentType = response.headers.get("content-type");
+  let data;
+  if (contentType && contentType.indexOf("application/json") !== -1) {
+    data = await response.json();
+  } else {
+    data = await response.text();
+  }
+
+  if (response.status >= 200 && response.status < 300) {
+    return data;
+  } else {
+    throw new Error(data);
+  }
+}
+
+export async function login(usernameOrEmail, password) {
+  const data = await apiRequest(
+    "/auth/login",
+    "POST",
+    { usernameOrEmail, password },
+    false
+  );
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("tokenExpiration", data.expiresIn);
+  return data;
+}
+
+export async function signUpUser(user) {
+  return await apiRequest("/auth/signup", "POST", user, false);
+}
+
+export async function fetchUserInfo() {
+  return await apiRequest("/me", "GET");
+}
+
+export async function findAndDisplayConversations(nickName) {
+  return await apiRequest(`/searchConversation?nickName=${nickName}`, "GET");
+}
+
+export async function findChatMessages(senderId, recipientId) {
+  return await apiRequest(`/messages/${senderId}/${recipientId}`, "GET");
+}
+
+export async function searchUsers(nickname) {
+  return await apiRequest(`/searchUser?nickName=${nickname}`, "GET");
+}
+
 export function connectWebSocket(
   user,
   onConnected,
   onError,
   onMessageReceived
 ) {
-  const socket = new SockJS("http://localhost:8080/ws");
+  const token = localStorage.getItem("token");
+  const socket = new SockJS(`http://localhost:8080/ws?token=${token}`);
   stompClient = over(socket);
-  console.log("Connecting to the WebSocket server." + user.nickName);
+  console.log("Connecting to the WebSocket server. " + user.nickName);
+
   stompClient.connect({}, () => onConnected(stompClient, user), onError);
 }
 
@@ -25,23 +99,6 @@ export function sendMessage(message) {
 export function subscribe(destination, callback) {
   if (stompClient) {
     stompClient.subscribe(destination, callback);
-  }
-}
-
-export async function login(usernameOrEmail, password) {
-  const response = await fetch("http://localhost:8080/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ usernameOrEmail, password }),
-  });
-  const data = await response.json();
-  console.log("Login response:", response.status);
-  if (response.status === 200) {
-    return data;
-  } else {
-    throw new Error(data);
   }
 }
 
@@ -102,49 +159,8 @@ export function onError(error) {
   console.error("Error: ", error);
 }
 
-export async function findAndDisplayConversations(nickName) {
-  const response = await fetch(
-    `http://localhost:8080/searchConversation?nickName=${nickName}`
-  );
-  const users = await response.json();
-  return users;
-}
-
-export async function findChatMessages(senderId, recipientId) {
-  const response = await fetch(
-    `http://localhost:8080/messages/${senderId}/${recipientId}`
-  );
-  const messages = await response.json();
-  return messages;
-}
-
-export async function signUpUser(user) {
-  const response = await fetch("http://localhost:8080/userSignup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  const data = await response.json();
-
-  if (response.status === 200) {
-    return data;
-  } else {
-    throw new Error(data);
-  }
-}
-
 let handleReceivedMessage = null;
 
 export function setHandleReceivedMessageCallback(callback) {
   handleReceivedMessage = callback;
-}
-
-export async function searchUsers(nickname) {
-  const response = await fetch(
-    `http://localhost:8080/searchUser?nickName=${nickname}`
-  );
-  const users = await response.json();
-  return users;
 }

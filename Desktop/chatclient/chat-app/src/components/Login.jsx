@@ -10,35 +10,36 @@ function Login({ user, setUser, handleConnect, handleSignup }) {
   function handleChangePassword(e) {
     setUser({ ...user, password: e.target.value });
   }
+
   return (
-    <div className={styles["signin"]}>
-      <div className={styles["content"]}>
+    <div className={styles.signin}>
+      <div className={styles.content}>
         <h2>Sign in</h2>
-        <div className={styles["form"]}>
-          <div className={styles["inputBox"]}>
+        <div className={styles.form}>
+          <div className={styles.inputBox}>
             <Input
               className="primary"
               placeholder="Enter your username..."
-              user={user.fullName}
+              value={user.nickName}
               onChange={handleChangeNickname}
             />
           </div>
-          <div className={styles["inputBox"]}>
+          <div className={styles.inputBox}>
             <Input
               className="primary"
               placeholder="Enter your password..."
               type="password"
-              user={user.password}
+              value={user.password}
               onChange={handleChangePassword}
             />
           </div>
-          <div className={styles["links"]}>
+          <div className={styles.links}>
             <a href="#">Forgot password?</a>
             <a href="#" onClick={handleSignup}>
               Sign up
             </a>
           </div>
-          <div className={styles["inputBox"]}>
+          <div className={styles.inputBox}>
             <Button type="primary" onClick={handleConnect}>
               Login
             </Button>

@@ -19,6 +19,9 @@ function ChatNav({ nickName, onClick, onLogout, users, setUsers }) {
 
   async function handleUserSearch(event) {
     const data = await searchUsers(event.target.value);
+    console.log(data);
+    console.log(users);
+    console.log(users[0]);
     setUsers(data);
   }
 
@@ -47,13 +50,13 @@ function ChatNav({ nickName, onClick, onLogout, users, setUsers }) {
         <ul className={styles["chat-container"]}>
           {users.map(
             (user) =>
-              nickName !== user.nickName && (
+              nickName !== user && (
                 <ChatNavItem
                   onClick={onClick}
                   selected={selected}
                   setSelected={setSelected}
-                  nickName={user.nickName}
-                  key={user.nickName}
+                  nickName={user}
+                  key={user}
                 />
               )
           )}
