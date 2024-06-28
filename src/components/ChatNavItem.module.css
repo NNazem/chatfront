@@ -1,0 +1,106 @@
+.member {
+  padding: 10px 12px;
+  background-color: #ffffff;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 10px;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+  box-sizing: border-box;
+  color: #2ea34f;
+  cursor: pointer;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 5px 0;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  min-width: 80%;
+  max-width: 80%;
+  height: 80%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.member > :first-child {
+  flex-shrink: 0; /* Prevent shrinking */
+  margin-right: 10px; /* Add some space between logo and text */
+}
+
+.textContainer {
+  flex-grow: 1;
+  min-width: 0; /* Required for text-overflow to work in flex container */
+}
+
+.nickName {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: calc(100% - 10px);
+}
+
+.member p {
+  color: darkgray;
+  margin: 0; /* Ensure no extra margin */
+}
+
+.member.active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+  color: #ffffff;
+}
+
+.member:hover {
+  background-color: #f0f0f0;
+  color: #2ea34f;
+}
+
+.member:focus {
+  box-shadow: rgba(46, 164, 79, 0.4) 0 0 0 3px;
+  outline: none;
+}
+
+.member:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: default;
+}
+
+.member:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+  color: #ffffff;
+}
+
+.member.selected {
+  background-color: #ffffff;
+  box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+  color: #298e46;
+}
+
+.member.selected:hover {
+  background-color: #f0f0f0;
+  color: #2ea34f;
+}
+
+.logo {
+  width: 40px; /* Ensure a fixed width and height for the circle */
+  height: 40px;
+  border-radius: 50%; /* Make it a circle */
+  background-color: #0088cc; /* Background color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Prevent shrinking */
+}

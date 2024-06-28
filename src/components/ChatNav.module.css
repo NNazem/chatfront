@@ -1,0 +1,33 @@
+.chat-nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  background: linear-gradient(135deg, #2ea34f 0%, #36a32e 100%);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  max-width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.userAndButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+}
